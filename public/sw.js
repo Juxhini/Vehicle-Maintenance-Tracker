@@ -1,11 +1,12 @@
 const CACHE_NAME = 'autocare-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/icon-192.png',
-    '/icon-512.png',
+    './',
+    './index.html',
+    './manifest.json',
+    './icon-192.png',
+    './icon-512.png',
 ];
+
 
 // Install - cache core assets
 self.addEventListener('install', (event) => {
