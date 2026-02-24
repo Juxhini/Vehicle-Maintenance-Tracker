@@ -37,7 +37,8 @@ export function AppProvider({ children }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/api/data');
+                // Use relative path for GitHub Pages compatibility
+                const response = await fetch('./api/data');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.vehicles) setVehicles(data.vehicles);
@@ -46,11 +47,13 @@ export function AppProvider({ children }) {
                     console.log('Data synced from server');
                 }
             } catch (error) {
-                console.error('Failed to fetch data from server:', error);
+                // Silently fail on static hosts like GitHub Pages
+                console.log('Running in static mode (no server sync)');
             }
         };
         fetchData();
     }, []);
+
 
     // Persist to server and localStorage on changes
     useEffect(() => {
@@ -68,7 +71,7 @@ export function AppProvider({ children }) {
         const syncToServer = async () => {
             setIsSyncing(true);
             try {
-                await fetch('/api/data', {
+                await fetch('./api/data', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ vehicles, logs, customItems }),
@@ -79,6 +82,7 @@ export function AppProvider({ children }) {
                 setIsSyncing(false);
             }
         };
+
 
         const timeout = setTimeout(syncToServer, 1000); // Debounce sync
         return () => clearTimeout(timeout);
