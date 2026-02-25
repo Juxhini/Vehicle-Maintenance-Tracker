@@ -46,13 +46,14 @@ function apiPlugin() {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: '/Vehicle-Maintenance-Tracker/', // Required for GitHub Pages
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/Vehicle-Maintenance-Tracker/' : '/',
   plugins: [react(), apiPlugin()],
   server: {
     port: 5174,
     host: true // Expose to local network for smartphone access
   }
-})
+}))
+
 
 
